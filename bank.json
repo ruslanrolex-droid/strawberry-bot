@@ -23,7 +23,8 @@
           "result": null,
           "profit": 0,
           "settled_at": null,
-          "date": "2026-07-16"
+          "date": "2026-07-16",
+          "match_time": "04:00"
         },
         {
           "id": "klubnika_2_20260716_192856",
@@ -37,7 +38,8 @@
           "result": null,
           "profit": 0,
           "settled_at": null,
-          "date": "2026-07-16"
+          "date": "2026-07-16",
+          "match_time": "20:45"
         },
         {
           "id": "klubnika_3_20260716_192858",
@@ -51,7 +53,8 @@
           "result": null,
           "profit": 0,
           "settled_at": null,
-          "date": "2026-07-16"
+          "date": "2026-07-16",
+          "match_time": "17:30"
         },
         {
           "id": "klubnika_4_20260716_192900",
@@ -65,7 +68,8 @@
           "result": null,
           "profit": 0,
           "settled_at": null,
-          "date": "2026-07-16"
+          "date": "2026-07-16",
+          "match_time": "19:00"
         },
         {
           "id": "klubnika_5_20260716_192902",
@@ -79,7 +83,8 @@
           "result": null,
           "profit": 0,
           "settled_at": null,
-          "date": "2026-07-16"
+          "date": "2026-07-16",
+          "match_time": "17:30"
         }
       ],
       "total_bets": 5,
