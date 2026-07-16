@@ -152,7 +152,7 @@ function upd(){
       var dateStr = h.d || '—'
       hl.innerHTML+='<div class="hist">'+
         '<div class="mt">'+
-          '<div style="font-size:13px;color:#888;margin-bottom:2px">'+dateStr+'</div>'+
+          '<div style="font-size:13px;color:#888;margin-bottom:2px">'+dateStr+' · '+(h.t||'??:??')+' MSK</div>'+
           '<div>'+h.m+'</div>'+
           '<div style="margin-top:4px;display:flex;gap:8px;align-items:center">'+
             '<span style="font-size:13px;color:#4ecdc4;font-weight:600">'+h.o+'</span>'+
@@ -205,11 +205,11 @@ function showStrat(id){
 
 // Demo data
 var dm=[
-  {s:'klubnika',st:500,m:'Zaglebie Sosnowiec - Nysa',o:'П2',k:6.45,d:'15.07.2026',r:'win'},
-  {s:'klubnika',st:500,m:'LNZ Cherkasy - Goztepe',o:'П1',k:2.76,d:'15.07.2026',r:'pending'},
-  {s:'p1_iz_1x',st:500,m:'The Strongest - Bolívar',o:'П1',k:2.32,d:'13.07.2026',r:'loss'},
-  {s:'basketball',st:500,m:'CSKA Moscow - Zenit',o:'П1',k:1.95,d:'14.07.2026',r:'win'},
-  {s:'basketball',st:500,m:'Real Madrid - Barcelona',o:'П2',k:2.15,d:'15.07.2026',r:'pending'}
+  {s:'klubnika',st:500,m:'Zaglebie Sosnowiec - Nysa',o:'П2',k:6.45,d:'15.07.2026',t:'17:00',r:'win'},
+  {s:'klubnika',st:500,m:'LNZ Cherkasy - Goztepe',o:'П1',k:2.76,d:'15.07.2026',t:'17:00',r:'pending'},
+  {s:'p1_iz_1x',st:500,m:'The Strongest - Bolívar',o:'П1',k:2.32,d:'13.07.2026',t:'23:15',r:'loss'},
+  {s:'basketball',st:500,m:'CSKA Moscow - Zenit',o:'П1',k:1.95,d:'14.07.2026',t:'20:00',r:'win'},
+  {s:'basketball',st:500,m:'Real Madrid - Barcelona',o:'П2',k:2.15,d:'15.07.2026',t:'22:00',r:'pending'}
 ]
 dm.forEach(function(x){
   HIST.push(x)
