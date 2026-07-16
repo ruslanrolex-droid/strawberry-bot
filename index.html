@@ -149,13 +149,24 @@ function upd(){
     for(var i=HIST.length-1;i>=0;i--){
       var h=HIST[i]
       var arrow = h.r=='pending' ? '⏳' : (h.r=='win' ? '✅' : '❌')
+      var dateStr = h.d || '—'
       hl.innerHTML+='<div class="hist">'+
         '<div class="mt">'+
-          '<div>'+arrow+' '+(STS.find(function(x){return x.id==h.s})||{nm:''}).nm+'</div>'+
-          '<div class="tm">'+h.m+'</div>'+
-          '<div class="tm" style="color:'+(h.r=='win'?'#4ecdc4':'#ff6b6b')+'">'+h.o+' @ '+h.k.toFixed(2)+' · '+h.st+'₽</div>'+
+          '<div style="font-size:13px;color:#888;margin-bottom:2px">'+dateStr+'</div>'+
+          '<div>'+h.m+'</div>'+
+          '<div style="margin-top:4px;display:flex;gap:8px;align-items:center">'+
+            '<span style="font-size:13px;color:#4ecdc4;font-weight:600">'+h.o+'</span>'+
+            '<span style="font-size:13px;color:#aaa">@ '+h.k.toFixed(2)+'</span>'+
+            '<span style="font-size:12px;color:#666">'+h.st+'₽</span>'+
+          '</div>'+
         '</div>'+
-        '<div class="res '+(h.r=='win'?'w':'l')+'">'+(h.r=='pending'?'⏳':(h.r=='win'?'✅ +'+((h.k-1)*h.st).toFixed(0)+'₽':'❌ -'+h.st+'₽'))+'</div>'+
+        '<div style="display:flex;flex-direction:column;align-items:flex-end">'+
+          '<span style="font-size:11px;color:#666">'+(STS.find(function(x){return x.id==h.s})||{nm:''}).nm+'</span>'+
+          '<span style="font-size:18px;margin-top:4px">'+(h.r=='pending'?'⏳':(h.r=='win'?'✅':'❌'))+'</span>'+
+          '<span style="font-size:12px;'+(h.r=='win'?'color:#4ecdc4':'color:#ff6b6b')+';font-weight:600">'+
+            (h.r=='pending'?'':(h.r=='win'?'+'+((h.k-1)*h.st).toFixed(0)+'₽':'-'+h.st+'₽'))+
+          '</span>'+
+        '</div>'+
       '</div>'
     }
   }
