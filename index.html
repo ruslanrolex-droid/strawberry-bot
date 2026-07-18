@@ -124,9 +124,11 @@ function loadBank(){
       var s=d.strategies[k], js=sts[k]
       if(!js)return
       js.bets=s.total_bets||0; js.wins=s.wins||0; js.losses=s.losses||0; js.pl=s.total_profit||0
-      if(s.start_balance)B.start=s.start_balance
-      if(s.current_balance)B.bal=s.current_balance
-      B.bets=js.bets; B.wins=js.wins; B.losses=js.losses; B.pl=js.pl
+      if(k=='klubnika'){
+        if(s.start_balance)B.start=s.start_balance
+        if(s.current_balance)B.bal=s.current_balance
+      }
+      if(k=='klubnika'){B.bets=js.bets; B.wins=js.wins; B.losses=js.losses; B.pl=js.pl}
       if(s.bets&&s.bets.length){
         s.bets.forEach(function(b){
           HIST.push({
