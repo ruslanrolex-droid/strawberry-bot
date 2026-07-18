@@ -104,7 +104,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 // Init Telegram
 if(window.Telegram && Telegram.WebApp){Telegram.WebApp.ready();Telegram.WebApp.expand()}
 
-// DATA
 var B={bal:10000,start:10000,bets:0,wins:0,losses:0,pl:0}
 var STS=[
   {id:'klubnika',nm:'🍓 Клубника',desc:'Betexplorer прогрузы',bets:0,wins:0,losses:0,pl:0},
@@ -128,7 +127,6 @@ function loadBank(){
         if(s.start_balance)B.start=s.start_balance
         if(s.current_balance)B.bal=s.current_balance
       }
-      if(k=='klubnika'){B.bets=js.bets; B.wins=js.wins; B.losses=js.losses; B.pl=js.pl}
       if(s.bets&&s.bets.length){
         s.bets.forEach(function(b){
           HIST.push({
@@ -141,7 +139,20 @@ function loadBank(){
     })
     upd()
   }).catch(function(){
-    loadDemo()
+    var dm=[
+      {s:'klubnika',st:500,m:'Zaglebie Sosnowiec - Nysa',o:'П2',k:6.45,d:'15.07.2026',t:'17:00',r:'win'},
+      {s:'klubnika',st:500,m:'LNZ Cherkasy - Goztepe',o:'П1',k:2.76,d:'15.07.2026',t:'17:00',r:'pending'},
+      {s:'p1_iz_1x',st:500,m:'The Strongest - Bolívar',o:'П1',k:2.32,d:'13.07.2026',t:'23:15',r:'loss'},
+      {s:'basketball',st:500,m:'CSKA Moscow - Zenit',o:'П1',k:1.95,d:'14.07.2026',t:'20:00',r:'win'},
+      {s:'basketball',st:500,m:'Real Madrid - Barcelona',o:'П2',k:2.15,d:'15.07.2026',t:'22:00',r:'pending'}
+    ]
+    dm.forEach(function(x){
+      HIST.push(x); var s=STS.find(function(y){return y.id==x.s})
+      if(s)s.bets++
+      if(x.r=='win'){var p=(x.k-1)*x.st;B.bal+=p;B.pl+=p;B.wins++;if(s){s.wins++;s.pl+=p}}
+      else if(x.r=='loss'){B.bal-=x.st;B.pl-=x.st;B.losses++;if(s){s.losses++;s.pl-=x.st}}
+    })
+    upd()
   })
 }
 
@@ -172,8 +183,7 @@ function upd(){
     hl.innerHTML='<div class="empty"><div class="ic">📭</div>Нет ставок</div>'
   }else{
     for(var i=HIST.length-1;i>=0;i--){
-      var h=HIST[i]
-      var dateStr = h.d || '—'
+      var h=HIST[i]; var dateStr = h.d || '—'
       hl.innerHTML+='<div class="hist">'+
         '<div class="mt">'+
           '<div style="font-size:13px;color:#888;margin-bottom:2px">'+dateStr+' · '+(h.t||'??:??')+' MSK</div>'+
@@ -196,22 +206,18 @@ function upd(){
   }
 }
 
-function page(id){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});document.getElementById('p-'+id).classList.add('active')}
+function page(id){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});document.getElementById('p-'+id).classList.add('active')}
 function betShow(){document.getElementById('md-bet').classList.add('on')}
 function betHide(){document.getElementById('md-bet').classList.remove('on')}
 function betAdd(){
-  var s=document.getElementById('inp-s').value
-  var m=document.getElementById('inp-m').value.trim()
+  var s=document.getElementById('inp-s').value; var m=document.getElementById('inp-m').value.trim()
   var o=document.getElementById('inp-o').value.trim().toUpperCase()
-  var k=parseFloat(document.getElementById('inp-k').value)
-  var st=parseFloat(document.getElementById('inp-s2').value)||500
+  var k=parseFloat(document.getElementById('inp-k').value); var st=parseFloat(document.getElementById('inp-s2').value)||500
   if(!m||!o||!k){alert('Заполните поля');return}
   HIST.push({s:s,st:st,m:m,o:o,k:k,d:new Date().toLocaleDateString('ru-RU'),r:'pending'})
   var sts=STS.find(function(x){return x.id==s});if(sts)sts.bets++
-  B.bets++
   document.getElementById('inp-m').value='';document.getElementById('inp-o').value=''
-  document.getElementById('inp-k').value=''
-  betHide();page('hist');upd()
+  document.getElementById('inp-k').value=''; betHide();page('hist');upd()
 }
 function showStrat(id){
   var s=STS.find(function(x){return x.id==id});if(!s)return
@@ -221,23 +227,7 @@ function showStrat(id){
   else{h.reverse().forEach(function(x){msg+='\n'+(x.r=='win'?'✅':'❌')+' '+x.m+' '+x.o+' @ '+x.k.toFixed(2)})}
   alert(msg)
 }
-function loadDemo(){
-  var dm=[
-    {s:'klubnika',st:500,m:'Zaglebie Sosnowiec - Nysa',o:'П2',k:6.45,d:'15.07.2026',t:'17:00',r:'win'},
-    {s:'klubnika',st:500,m:'LNZ Cherkasy - Goztepe',o:'П1',k:2.76,d:'15.07.2026',t:'17:00',r:'pending'},
-    {s:'p1_iz_1x',st:500,m:'The Strongest - Bolívar',o:'П1',k:2.32,d:'13.07.2026',t:'23:15',r:'loss'},
-    {s:'basketball',st:500,m:'CSKA Moscow - Zenit',o:'П1',k:1.95,d:'14.07.2026',t:'20:00',r:'win'},
-    {s:'basketball',st:500,m:'Real Madrid - Barcelona',o:'П2',k:2.15,d:'15.07.2026',t:'22:00',r:'pending'}
-  ]
-  dm.forEach(function(x){
-    HIST.push(x)
-    var s=STS.find(function(y){return y.id==x.s})
-    if(s){s.bets++}
-    if(x.r=='win'){var p=(x.k-1)*x.st;B.bal+=p;B.pl+=p;B.wins++;if(s){s.wins++;s.pl+=p}}
-    else if(x.r=='loss'){B.bal-=x.st;B.pl-=x.st;B.losses++;if(s){s.losses++;s.pl-=x.st}}
-  })
-  upd()
-}
 
-loadBank()
-</script>
+loadBank()</script>
+</body>
+</html>
